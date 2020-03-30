@@ -1,0 +1,121 @@
+
+/* PARTIE CODE QUENTIN */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#define L 50    // TAILLE MAX AUTORISEE GRILLE
+#define C 50
+
+
+// Ne sert qu'à créer la grille initiale
+void crea_grille(char grille[L][C], int ligne, int colonne)
+{
+    int i,j;
+
+    for(i=0; i<ligne; i++)
+    {
+        for(j=0; j<colonne; j++)
+        {
+            grille[i][j] = ' ';
+        }
+    }
+}
+
+
+void afficher(char grille[L][C], int ligne, int colonne)
+{
+    int i,j;
+    for(i=0; i<ligne; i++)
+    {
+        for(j=0; j<colonne; j++)
+        {
+            printf("| %c ", grille[i][j] );
+        }
+
+    printf("| \n");
+    }
+    
+    /* Ce qui suit c'est juste pour afficher le numéro de la colonne */
+    
+    for(i=0; i<colonne; i++)
+    {
+        printf(" '''");
+    }
+    
+    printf("\n");
+    
+    for(i=0; i<colonne; i++)
+    {
+        printf("  %d ", i+1);
+    }
+    
+    printf("\n\n");
+    
+}
+
+
+
+//Remplir les cases
+
+int choix_colonne()
+{
+    int depot;  // lié à la colonne dans laquelle on met le jeton
+
+    printf("Choisis ta colonne: ");
+    scanf("%d", &depot);
+
+    return depot;
+}
+
+void remplir_player1(char grille[L][C], int ligne, int colonne)
+{
+    
+    int compteur = 0;   // utilisé pour savoir à quel point la colonne depot sera remplie
+    char jeton = 'X';
+    int depot = choix_colonne()-1; // -1 car le premier indice est 0
+    ligne = ligne-1; //même raison qu'au dessus
+    
+
+    while (grille[ligne][depot] != ' ')
+    {
+        printf("La colonne n'est pas disponible, veuillez choisir une autre colonne.\n");
+        int depot = choix_colonne();
+    }
+
+    while (grille[ligne-1][depot] != ' ')
+    {
+        ligne-=1;
+    }
+    
+    grille[ligne][depot] = jeton;
+
+}
+
+
+int main()
+{
+
+    int ligne, colonne;
+    char grille[L][C];
+
+    printf("Choisissez le nombre de ligne de la grille: ");
+    scanf("%d", &ligne);
+    printf("Choisissez le nombre de colonne de la grille: ");
+    scanf("%d", &colonne);
+
+
+    crea_grille(grille, ligne, colonne);
+
+
+    afficher(grille,ligne,colonne);
+
+
+    remplir_player1(grille, ligne, colonne);
+
+
+    afficher(grille,ligne,colonne);
+
+
+    return 0;
+}
